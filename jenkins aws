@@ -1,0 +1,13 @@
+pipeline{
+agent any
+stages{
+  stage ("create aws stack') {
+  
+  steps{
+  
+  echo " create aws stack"
+  sh 'aws s3 ls'
+  }
+  }
+  }
+  }
