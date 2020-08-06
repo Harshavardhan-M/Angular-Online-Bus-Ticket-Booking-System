@@ -24,10 +24,11 @@ Resources:
         Fn::Base64: |
           #!/bin/bash -xe
           yum update -y
-          yum install -y httpd
-          systemctl start httpd
-          systemctl enable httpd
-          echo "Hello World from $(hostname -f)" > /var/www/html/index.html
+          amazon-linux-extras install docker
+          yum install  docker
+         service docker start
+         usename -a -G docker ec2-user
+         docker run -d --name-Angular-Online-Bus-Ticket-Booking-System -p 8081:8080 Harshavardhan-M/Angular-Online-Bus-Ticket-Booking-System
 
   MyInstance2:
     Type: AWS::EC2::Instance
@@ -43,10 +44,11 @@ Resources:
         Fn::Base64: |
           #!/bin/bash -xe
           yum update -y
-          yum install -y httpd
-          systemctl start httpd
-          systemctl enable httpd
-          echo "Hello World from $(hostname -f)" > /var/www/html/index.html
+          amazon-linux-extras install docker
+          yum install  docker
+         service docker start
+         usename -a -G docker ec2-user
+         docker run -d --name-Angular-Online-Bus-Ticket-Booking-System -p 8081:8080 Harshavardhan-M/Angular-Online-Bus-Ticket-Booking-System
 
   ELBSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
@@ -54,9 +56,9 @@ Resources:
       GroupDescription: "ELB SG"
       SecurityGroupIngress:
         - CidrIp: 0.0.0.0/0
-          FromPort: 80
+          FromPort: 8081
           IpProtocol: tcp
-          ToPort: 80
+          ToPort: 8081
 
   ServerSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
@@ -64,13 +66,13 @@ Resources:
       GroupDescription: "EC2 SG"
       SecurityGroupIngress:
       - CidrIp: 0.0.0.0/0
-        FromPort: 22
+        FromPort: 8081
         IpProtocol: tcp
-        ToPort: 22
+        ToPort: 8081
       - SourceSecurityGroupName: !Ref ELBSecurityGroup
-        FromPort: 80
+        FromPort: 8081
         IpProtocol: tcp
-        ToPort: 80
+        ToPort: 8081
 
   MyLoadBalancer:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
@@ -88,7 +90,7 @@ Resources:
         - Type: forward
           TargetGroupArn: !Ref MyLoadBalancerTargetGroup
       LoadBalancerArn: !Ref MyLoadBalancer
-      Port: 80
+      Port: 8081
       Protocol: HTTP
 
   MyLoadBalancerTargetGroup:
@@ -97,15 +99,15 @@ Resources:
       HealthCheckIntervalSeconds: 30
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 3
-      Port: 80
+      Port: 8081
       Protocol: HTTP
       UnhealthyThresholdCount: 5
       VpcId: !Ref ELBVPC
       Targets:
         - Id: !Ref MyInstance1
-          Port: 80
+          Port: 8081
         - Id: !Ref MyInstance2
-          Port: 80
+          Port: 8081
 
 Outputs:
   ELBDNSName:
