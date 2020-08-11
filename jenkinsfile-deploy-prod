@@ -5,17 +5,17 @@ pipeline {
                 steps {
                   echo "Deploying to Prod1"
                   sshagent(['ssh-key']) {
-                      sh "ssh -o StrictHostKeyChecking=no ec2-user@3.89.146.189 docker rm -f petclinic || true"
-                      sh "ssh -o StrictHostKeyChecking=no ec2-user@3.89.146.189 docker run -d --name=petclinic -p 8081:8080 harsha0961/petclinic"
-                  }
+                      sh "ssh -o StrictHostKeyChecking=no ec2-user@3.89.146.189 docker rm -f online_bus || true"
+                      sh "ssh -o StrictHostKeyChecking=no ec2-user@3.89.146.189 docker run -d --name=online_bus -p 8081:8080 harsha0961/online_bus"
+               
                 }
       }
       stage('Deploy to Prod2') {
                 steps {
                   echo "Deploying to Prod2"
                   sshagent(['ssh-key']) {
-                      sh "ssh -o StrictHostKeyChecking=no ec2-user@18.204.21.90 docker rm -f petclinic || true"
-                      sh "ssh -o StrictHostKeyChecking=no ec2-user@18.204.21.90 docker run -d --name=petclinic -p 8081:8080 harsha0961/petclinic"
+                      sh "ssh -o StrictHostKeyChecking=no ec2-user@18.204.21.90 docker rm -f online_bus || true"
+                      sh "ssh -o StrictHostKeyChecking=no ec2-user@18.204.21.90 docker run -d --name=online_bus -p 8081:8080 harsha0961/online_bus"
                   }
                 }
       }         
