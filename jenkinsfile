@@ -17,12 +17,7 @@
         }
       }
     
-    stage ('Archive') {
-      steps{
-       echo "Archiving Project"
-      archiveArtifacts artifacts: '*/.json', followSymlinks: false
-    }
-   } 
+    
     
   stage ('Build Docker Image') {
       steps{
