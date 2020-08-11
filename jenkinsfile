@@ -19,7 +19,8 @@
     
     
     
-  stage ('Build Docker Image') {
+    
+    stage ('Build Docker Image') {
       steps{
         echo "Building Docker Image"
         script {
@@ -42,7 +43,7 @@
       steps{
         echo "Deploying to Dev Environment"
         sh "docker rm -f online_bus || true"
-        sh "docker run -d --name=petclinic -p 8081:8080 harsha0961/online_bus"
+        sh "docker run -d --name=online_bus -p 8081:8080 harsha0961/online_bus"
       }
     }
   }
