@@ -5,6 +5,12 @@
     dockerImage = ''
   }
   agent any
+  
+   stage('Install node modules'){
+        
+        sh "npm install"
+    }
+  
   stages{
     stage ('Build') {
       steps{
