@@ -1,13 +1,23 @@
-# base image
-FROM node:8.9.4
+ # pull official base image
+FROM node:current
 
 # set working directory
-WORKDIR /app
+WORKDIR /
 
-# install and cache app dependencies
-COPY . .
-RUN npm install
-RUN npm run build --prod
 
-FROM nginx:1.13.3-alpine
-COPY dist/ Angular-Online-Bus-Ticket-Booking-System/usr/share/nginx/html
+# add `/node_modules/.bin` to $PATH
+ENV PATH /node_modules/.bin:$PATH
+
+# install app dependencies
+COPY package.json ./
+
+RUN npm install 
+RUN npm install -y
+RUN npm install -g @angular/cli
+
+# add app
+COPY . ./
+
+# start app
+CMD ["ng","serve"]
+
