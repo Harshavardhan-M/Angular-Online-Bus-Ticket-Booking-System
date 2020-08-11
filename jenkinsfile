@@ -4,12 +4,16 @@
     registryCredential = 'docker_hub_harsha0961'
     dockerImage = ''
   }
-   agent any
+  agent any
   stages{
     stage ('Build') {
       steps{
         echo "Building Project"
-        sh "npm run ng --build  --prod"
+        nodejs('nodejs') {
+         sh 'npm install'
+         sh 'npm run build'
+       
+        }
       }
     }
  
