@@ -1,0 +1,13 @@
+ pipeline {
+  agent any
+  stages{
+    stage ('Create AWS Stack') {
+      steps {
+        echo "Creating AWS CloudFormation Stack"
+        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+          sh 'aws cloudformation create-stack --stack-name petclinic --template-body file://aws-template-petclinic.yaml --region us-east-1 --parameters  ParameterKey=SSHKey,ParameterValue=hackathn ParameterKey=ELBVPC,ParameterValue=vpc-b350b4ce ParameterKey=ELBSubnet,ParameterValue="subnet-87e2fdb9\\,subnet-6b31e74a"'
+        }
+      }
+    }
+  }
+}
