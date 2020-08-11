@@ -1,6 +1,6 @@
   pipeline {
   environment {
-    registry = "harsga0961/online_bus"
+    registry = "harsha0961/online_bus"
     registryCredential = 'docker_hub_harsha0961'
     dockerImage = ''
   }
